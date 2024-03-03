@@ -10,7 +10,13 @@ if [ -z "${FIREBASE_PROJECT}" ]; then
     exit 1
 fi
 
-firebase deploy \
+if [ -z "{USE_PIPENV}" ]; then
+    FIREBASE=firebase
+else
+    FIREBASE="pipenv run firebase"
+fi
+
+$FIREBASE deploy \
     -m "${GITHUB_REF} (${GITHUB_SHA})" \
     --project ${FIREBASE_PROJECT} \
 
